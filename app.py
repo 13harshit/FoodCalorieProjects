@@ -35,8 +35,17 @@ LABEL_LIST = ["thumb", "apple", "banana", "orange", "qiwi", "tomato", "carrot", 
 def load_model():
     try:
         if os.path.exists(MODEL_WEIGHTS_PATH):
-            model = torch.hub.load(YOLOV5_REPO_PATH, 'custom', path=MODEL_WEIGHTS_PATH, source='local')
-            model.conf = 0.15 # Lower confidence threshold to detect more objects
+            import sys
+            if YOLOV5_REPO_PATH not in sys.path:
+                sys.path.insert(0, YOLOV5_REPO_PATH)
+            
+            # Using DetectMultiBackend directly bypasses the torch.hub.load GitHub fetch issue
+            from models.common import DetectMultiBackend
+            from utils.torch_utils import select_device
+            
+            device = select_device('') # Auto select CPU/GPU
+            model = DetectMultiBackend(MODEL_WEIGHTS_PATH, device=device, dnn=False, data=None, fp16=False)
+            model.conf = 0.15 # Use standard YOLOv5 configuration logic in prediction
             return model, True # True denotes custom model
         else:
             model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
@@ -44,6 +53,8 @@ def load_model():
             return model, False # False denotes standard model
     except Exception as e:
         st.error(f"Failed to load model: {e}")
+        import traceback
+        st.error(traceback.format_exc())
         return None, False
 
 def process_image(img_array, model):

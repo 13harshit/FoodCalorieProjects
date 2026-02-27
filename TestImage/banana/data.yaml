@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['bananas', 'book', 'dish', 'table']
+
+roboflow:
+  workspace: jim-pepvn
+  project: banana-9nmv2
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/jim-pepvn/banana-9nmv2/dataset/1

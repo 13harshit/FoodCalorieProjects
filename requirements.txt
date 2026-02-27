@@ -11,3 +11,9 @@ tqdm
 matplotlib
 seaborn
 scipy
+ultralytics
+psutil
+thop
+gitpython
+packaging
+setuptools

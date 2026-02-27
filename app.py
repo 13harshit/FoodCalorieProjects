@@ -49,9 +49,8 @@ def load_model():
             model.conf = 0.15 # Use standard YOLOv5 configuration logic in prediction
             return model, True # True denotes custom model
         else:
-            model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-            model.conf = 0.15
-            return model, False # False denotes standard model
+            st.error(f"Cannot find custom model weights at {MODEL_WEIGHTS_PATH}. Ensure best.pt is downloaded or pushed to GitHub.")
+            return None, False
     except Exception as e:
         st.error(f"Failed to load model: {e}")
         import traceback

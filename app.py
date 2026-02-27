@@ -25,8 +25,9 @@ st.set_page_config(
 )
 
 # Constants
-YOLOV5_REPO_PATH = r'C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5'
-MODEL_WEIGHTS_PATH = r'C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\best.pt'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+YOLOV5_REPO_PATH = os.path.join(BASE_DIR, 'web_app', 'models', 'yolov5')
+MODEL_WEIGHTS_PATH = os.path.join(YOLOV5_REPO_PATH, 'best.pt')
 LABEL_LIST = ["thumb", "apple", "banana", "orange", "qiwi", "tomato", "carrot", "onion"]
 
 # Load model, cache to prevent reloading on every interaction

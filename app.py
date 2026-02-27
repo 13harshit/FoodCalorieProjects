@@ -40,11 +40,12 @@ def load_model():
                 sys.path.insert(0, YOLOV5_REPO_PATH)
             
             # Using DetectMultiBackend directly bypasses the torch.hub.load GitHub fetch issue
-            from models.common import DetectMultiBackend
+            from models.common import DetectMultiBackend, AutoShape
             from utils.torch_utils import select_device
             
             device = select_device('') # Auto select CPU/GPU
             model = DetectMultiBackend(MODEL_WEIGHTS_PATH, device=device, dnn=False, data=None, fp16=False)
+            model = AutoShape(model)
             model.conf = 0.15 # Use standard YOLOv5 configuration logic in prediction
             return model, True # True denotes custom model
         else:

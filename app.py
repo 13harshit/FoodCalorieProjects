@@ -43,7 +43,7 @@ def load_model():
             model.conf = 0.15
             return model, False # False denotes standard model
     except Exception as e:
-        print(f"Failed to load model: {e}")
+        st.error(f"Failed to load model: {e}")
         return None, False
 
 def process_image(img_array, model):

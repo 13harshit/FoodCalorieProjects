@@ -17,7 +17,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 # Setup paths
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BACKEND_DIR = os.path.join(BASE_DIR, 'web_app', 'backend')
 YOLOV5_REPO_PATH = os.path.join(BASE_DIR, 'web_app', 'models', 'yolov5')
 MODEL_WEIGHTS_PATH = os.path.join(YOLOV5_REPO_PATH, 'best.pt')

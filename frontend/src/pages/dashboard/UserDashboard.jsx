@@ -8,8 +8,8 @@ import './Dashboard.css';
 
 const API_URL = 'http://localhost:8000';
 
-// Compress image to a smaller base64 string (max 200KB)
-function compressImage(file, maxWidth = 400) {
+// Compress image to a much smaller base64 string to fit in Supabase row limits
+function compressImage(file, maxWidth = 300) {
     return new Promise((resolve) => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
@@ -19,7 +19,8 @@ function compressImage(file, maxWidth = 400) {
             canvas.width = img.width * ratio;
             canvas.height = img.height * ratio;
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            resolve(canvas.toDataURL('image/jpeg', 0.6));
+            // High compression: 0.4 quality JPEG
+            resolve(canvas.toDataURL('image/jpeg', 0.4));
         };
         img.src = URL.createObjectURL(file);
     });

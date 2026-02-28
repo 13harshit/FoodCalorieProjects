@@ -10,6 +10,8 @@ import {
     PieChart, Pie, Cell, LineChart, Line, Legend
 } from 'recharts';
 import { Link } from 'react-router-dom';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import './Dashboard.css';
 
 const COLORS = ['#FF6B35', '#1B998B', '#F7C948', '#A78BFA', '#EF4444', '#22C55E', '#3B82F6', '#EC4899'];
@@ -150,39 +152,52 @@ export default function AdminDashboard() {
         return { dailyData, analysesData, userActivity };
     };
 
-    const downloadMessagesCSV = () => {
+    const downloadMessagesPDF = () => {
         if (allMessages.length === 0) return;
 
-        const headers = ['Date', 'Name', 'Email', 'Subject', 'Message'];
-        const csvRows = [headers.join(',')];
+        const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text('Contact Messages Report', 14, 22);
+        doc.setFontSize(11);
+        doc.setTextColor(100);
+        doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
+
+        const tableColumn = ["Date", "Name", "Email", "Subject", "Message"];
+        const tableRows = [];
 
         allMessages.forEach(msg => {
-            const row = [
-                `"${new Date(msg.created_at).toLocaleString()}"`,
-                `"${(msg.name || '').replace(/"/g, '""')}"`,
-                `"${(msg.email || '').replace(/"/g, '""')}"`,
-                `"${(msg.subject || '').replace(/"/g, '""')}"`,
-                `"${(msg.message || '').replace(/"/g, '""')}"`
+            const messageData = [
+                new Date(msg.created_at).toLocaleDateString(),
+                msg.name || 'N/A',
+                msg.email || 'N/A',
+                msg.subject || 'N/A',
+                (msg.message || '').length > 100 ? msg.message.substring(0, 100) + '...' : msg.message
             ];
-            csvRows.push(row.join(','));
+            tableRows.push(messageData);
         });
 
-        // Add BOM for Excel UTF-8 compatibility
-        const blob = new Blob(['\ufeff' + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'contact_messages.csv';
+        autoTable(doc, {
+            head: [tableColumn],
+            body: tableRows,
+            startY: 40,
+            theme: 'grid',
+            styles: { fontSize: 9, cellPadding: 3 },
+            headStyles: { fillColor: [167, 139, 250], textColor: [255, 255, 255] },
+            alternateRowStyles: { fillColor: [249, 250, 251] },
+            columnStyles: {
+                0: { cellWidth: 25 }, // Date
+                1: { cellWidth: 35 }, // Name
+                2: { cellWidth: 45 }, // Email
+                3: { cellWidth: 35 }, // Subject
+                4: { cellWidth: 'auto' } // Message
+            }
+        });
 
-        document.body.appendChild(a);
-        a.click();
-
-        // Cleanup
-        setTimeout(() => {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        }, 100);
+        // Open the PDF in a new tab to bypass IDM/Download Manager interception.
+        // It allows the browser's native PDF viewer to handle saving/printing.
+        const pdfBlob = doc.output('blob');
+        const url = window.URL.createObjectURL(pdfBlob);
+        window.open(url, '_blank');
     };
 
     if (loading) {
@@ -581,11 +596,11 @@ export default function AdminDashboard() {
                             <h2>Contact Messages</h2>
                             <button
                                 className="btn btn-secondary"
-                                onClick={downloadMessagesCSV}
+                                onClick={downloadMessagesPDF}
                                 disabled={allMessages.length === 0}
                                 style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '8px 16px' }}
                             >
-                                <Download size={16} /> Export CSV
+                                <Download size={16} /> Download PDF
                             </button>
                         </div>
                         <p className="dashboard__tab-desc">Submissions from the public Contact Us page.</p>

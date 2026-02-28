@@ -1,14 +1,6 @@
 {
     "rewrites": [
         {
-            "source": "/analyze",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/health",
-            "destination": "/api/index.py"
-        },
-        {
             "source": "/(.*)",
             "destination": "/frontend/dist/$1"
         }

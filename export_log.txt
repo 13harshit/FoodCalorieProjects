@@ -1,0 +1,58 @@
+[34m[1mexport: [0mdata=C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\data\coco128.yaml, weights=['web_app/models/yolov5/best.pt'], imgsz=[640, 640], batch_size=1, device=cpu, half=False, inplace=False, keras=False, optimize=False, int8=False, per_tensor=False, dynamic=False, cache=, simplify=False, mlmodel=False, opset=17, verbose=False, workspace=4, nms=False, agnostic_nms=False, topk_per_class=100, topk_all=100, iou_thres=0.45, conf_thres=0.25, include=['onnx']
+YOLOv5  2026-2-27 Python-3.14.0 torch-2.10.0+cpu CPU
+
+Fusing layers... 
+custom_YOLOv5s summary: 232 layers, 7265397 parameters, 0 gradients
+Traceback (most recent call last):
+  File "C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\export.py", line 1525, in <module>
+    main(opt)
+    ~~~~^^^^^
+  File "C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\export.py", line 1520, in main
+    run(**vars(opt))
+    ~~~^^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\utils\_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\export.py", line 1387, in run
+    y = model(im)  # dry runs
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\models\yolo.py", line 270, in forward
+    return self._forward_once(x, profile, visualize)  # single-scale inference, train
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\models\yolo.py", line 169, in _forward_once
+    x = m(x)  # run
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\models\common.py", line 354, in forward
+    return self.conv(torch.cat((x[..., ::2, ::2], x[..., 1::2, ::2], x[..., ::2, 1::2], x[..., 1::2, 1::2]), 1))
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Harshit\FoodCalorieProject\Food-calorie-estimations-Using-Deep-Learning-And-Computer-Vision\web_app\models\yolov5\models\common.py", line 90, in forward_fuse
+    return self.act(self.conv(x))
+                    ~~~~~~~~~^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\conv.py", line 553, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Programs\Python\Python314\Lib\site-packages\torch\nn\modules\conv.py", line 548, in _conv_forward
+    return F.conv2d(
+           ~~~~~~~~^
+        input, weight, bias, self.stride, self.padding, self.dilation, self.groups
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+RuntimeError: Given groups=1, weight of size [32, 12, 3, 3], expected input[1, 48, 320, 320] to have 12 channels, but got 48 channels instead

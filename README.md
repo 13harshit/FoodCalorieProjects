@@ -63,17 +63,13 @@ Failure to adhere to these conditions violates both the project’s license and 
 
 ## Contributors
 **Made  With 💖 by**
-- **Chetan Jarande**
-- **Mukta Bhagwat**
-- **Vishakha Patil**
-- **Diya Ukirde**
+- **Harshit Rai**
 
 ## License
 This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](LICENSE).
 
 ## Contact
 For suggestions or inquiries, please reach out:
-- [Chetan Jarande Linkedin](https://www.linkedin.com/in/chetan-jarande/)
-- [Visit my website](https://chetanjarande-nextjs-portfolio-website.vercel.app)
+- [Visit my website](https://harshit-rai.vercel.app/)
 
 # FoodCalorieProjects

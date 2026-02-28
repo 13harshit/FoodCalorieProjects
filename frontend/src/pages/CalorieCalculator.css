@@ -1,0 +1,301 @@
+.calorie-page {
+    padding-top: 80px;
+}
+
+.calorie-hero {
+    padding: 80px 0 40px;
+    text-align: center;
+    background: var(--bg-gradient-hero);
+}
+
+.calorie-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    border-radius: var(--radius-full);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.calorie-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.calorie-hero__subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 36px;
+}
+
+.calorie-search {
+    display: flex;
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.calorie-search__input-wrap {
+    flex: 1;
+    position: relative;
+}
+
+.calorie-search__icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.calorie-search__input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    background: var(--bg-dark-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.calorie-search__input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+}
+
+.calorie-search__input::placeholder {
+    color: var(--text-muted);
+}
+
+.spin-icon {
+    animation: spin 1s linear infinite;
+}
+
+/* Popular Fruits */
+.popular-fruits h3 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.popular-fruits__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.popular-fruit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.popular-fruit:hover {
+    transform: translateY(-4px);
+}
+
+.popular-fruit__emoji {
+    font-size: 2rem;
+    transition: transform var(--transition-spring);
+}
+
+.popular-fruit:hover .popular-fruit__emoji {
+    transform: scale(1.2);
+}
+
+.popular-fruit__name {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Loading */
+.calorie-loading {
+    text-align: center;
+    padding: 80px 0;
+}
+
+.calorie-loading__animation {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.calorie-loading__animation span:nth-child(1) {
+    animation: bounceIn 1s ease infinite;
+}
+
+.calorie-loading__animation span:nth-child(2) {
+    animation: bounceIn 1s ease 0.3s infinite;
+}
+
+.calorie-loading__animation span:nth-child(3) {
+    animation: bounceIn 1s ease 0.6s infinite;
+}
+
+.calorie-loading p {
+    color: var(--text-secondary);
+}
+
+/* Error */
+.calorie-error {
+    padding: 24px;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    color: #EF4444;
+}
+
+/* Results */
+.calorie-result {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.calorie-result__header {
+    margin-bottom: 32px;
+}
+
+.calorie-result__header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+
+.calorie-result__serving {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.calorie-result__main-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.calorie-stat {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px 16px;
+}
+
+.calorie-stat--calories {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
+    border-color: rgba(255, 107, 53, 0.2);
+}
+
+.calorie-stat__value {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.calorie-stat--calories .calorie-stat__value {
+    color: var(--color-primary);
+}
+
+.calorie-stat__label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.calorie-stat__unit {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.calorie-result__details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+}
+
+.calorie-detail {
+    padding: 24px;
+}
+
+.calorie-detail h4 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.calorie-detail__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.calorie-detail__item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.calorie-detail__item span:first-child {
+    color: var(--text-secondary);
+}
+
+.calorie-detail__item span:last-child {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.calorie-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calorie-benefits li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.calorie-fun-fact {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.calorie-fun-fact p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .calorie-search {
+        flex-direction: column;
+    }
+
+    .calorie-result__main-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .calorie-result__details {
+        grid-template-columns: 1fr;
+    }
+}

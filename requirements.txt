@@ -17,3 +17,6 @@ thop
 gitpython
 packaging
 setuptools
+fastapi
+uvicorn
+python-multipart

@@ -1,0 +1,370 @@
+/* ============================
+   Landing Page Styles
+   ============================ */
+
+/* Hero */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-gradient-hero);
+    padding-top: 80px;
+}
+
+.hero__content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    border-radius: var(--radius-full);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.hero__title {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero__title-gradient {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-secondary));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease infinite;
+}
+
+.hero__subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+}
+
+.hero__actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Floating Food Emojis */
+.hero__food-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero__food-particle {
+    position: absolute;
+    opacity: 0.15;
+    animation: float var(--transition-slow) ease-in-out infinite;
+    filter: blur(1px);
+}
+
+.hero__food-particle:nth-child(odd) {
+    animation-name: floatSlow;
+}
+
+.hero__food-particle:nth-child(even) {
+    animation-name: floatReverse;
+}
+
+/* Gradient Orbs */
+.hero__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.hero__orb--1 {
+    width: 500px;
+    height: 500px;
+    background: var(--color-primary);
+    top: -200px;
+    right: -200px;
+    opacity: 0.08;
+}
+
+.hero__orb--2 {
+    width: 400px;
+    height: 400px;
+    background: var(--color-secondary);
+    bottom: -150px;
+    left: -150px;
+    opacity: 0.08;
+}
+
+.hero__orb--3 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-accent);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.04;
+}
+
+/* Animated Food Plate */
+.hero__plate-container {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.hero__plate {
+    width: 280px;
+    height: 280px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero__plate-ring {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(255, 107, 53, 0.15);
+    border-radius: 50%;
+    animation: spin 20s linear infinite;
+}
+
+.hero__plate-ring::before {
+    content: '';
+    position: absolute;
+    inset: 15px;
+    border: 1px dashed rgba(27, 153, 139, 0.15);
+    border-radius: 50%;
+}
+
+.hero__plate-items {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.hero__plate-item {
+    position: absolute;
+    font-size: 2.2rem;
+    top: 50%;
+    left: 50%;
+    transform: rotate(var(--angle)) translateX(120px) rotate(calc(-1 * var(--angle)));
+    animation: pulse 3s ease-in-out infinite;
+    animation-delay: var(--delay);
+}
+
+.hero__plate-center {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.hero__plate-cal {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: white;
+}
+
+/* Features */
+.features__header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.features__title {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.features__subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
+.features__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    padding: 32px;
+    text-align: center;
+}
+
+.feature-card__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.feature-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+}
+
+.feature-card__desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* How It Works */
+.how-it-works__title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 48px;
+}
+
+.how-it-works__steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+}
+
+.step {
+    text-align: center;
+    flex: 1;
+    max-width: 280px;
+    position: relative;
+}
+
+.step__number {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--color-primary), transparent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.step__icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+}
+
+.step h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.step p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.step__connector {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), transparent);
+    margin-top: 80px;
+    flex-shrink: 0;
+}
+
+/* CTA */
+.cta__card {
+    padding: 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta__food-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 4rem;
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.cta__card h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.cta__card p {
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.cta__actions {
+    position: relative;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero__title {
+        font-size: 2.5rem;
+    }
+
+    .hero__plate {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hero__plate-item {
+        transform: rotate(var(--angle)) translateX(85px) rotate(calc(-1 * var(--angle)));
+        font-size: 1.6rem;
+    }
+
+    .how-it-works__steps {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step__connector {
+        width: 2px;
+        height: 40px;
+        margin: 0;
+        background: linear-gradient(180deg, var(--color-primary), transparent);
+    }
+
+    .cta__card {
+        padding: 40px 24px;
+    }
+}

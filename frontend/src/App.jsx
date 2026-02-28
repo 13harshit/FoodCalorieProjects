@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,12 +13,12 @@ import ResetPassword from './pages/auth/ResetPassword';
 import UserDashboard from './pages/dashboard/UserDashboard';
 import AdminDashboard from './pages/dashboard/AdminDashboard';
 
-function ProtectedRoute({ children, adminOnly = false }) {
+function ProtectedRoute({ children, adminOnly = false, redirectAdminTo = null }) {
   const { user, userProfile, loading } = useAuth();
 
-  if (loading) {
+  if (loading || (user && !userProfile)) {
     return (
-      <div className="loading-screen">
+      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="spinner"></div>
       </div>
     );
@@ -26,14 +26,18 @@ function ProtectedRoute({ children, adminOnly = false }) {
 
   if (!user) return <Navigate to="/signin" replace />;
   if (adminOnly && userProfile?.role !== 'admin') return <Navigate to="/dashboard" replace />;
+  if (redirectAdminTo && userProfile?.role === 'admin') return <Navigate to={redirectAdminTo} replace />;
 
   return children;
 }
 
 function App() {
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard' || location.pathname === '/admin';
+
   return (
     <div className="app">
-      <Navbar />
+      {!isDashboard && <Navbar />}
       <main>
         <Routes>
           {/* Public Pages */}
@@ -48,9 +52,9 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
 
-          {/* Protected Pages */}
+          {/* Protected Pages — No Navbar/Footer */}
           <Route path="/dashboard" element={
-            <ProtectedRoute><UserDashboard /></ProtectedRoute>
+            <ProtectedRoute redirectAdminTo="/admin"><UserDashboard /></ProtectedRoute>
           } />
           <Route path="/admin" element={
             <ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>
@@ -60,7 +64,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <Footer />
+      {!isDashboard && <Footer />}
     </div>
   );
 }

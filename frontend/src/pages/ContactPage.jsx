@@ -1,17 +1,37 @@
 import { useState } from 'react';
-import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Mail, MapPin, Phone, Send, Loader2 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import './ContactPage.css';
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
     const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // In a real app, this would send the data to an API
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 5000);
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setLoading(true);
+        setError('');
+
+        const { error: insertError } = await supabase
+            .from('contact_messages')
+            .insert([{
+                name: formData.name,
+                email: formData.email,
+                subject: formData.subject,
+                message: formData.message
+            }]);
+
+        if (insertError) {
+            setError(insertError.message);
+        } else {
+            setSubmitted(true);
+            setTimeout(() => setSubmitted(false), 5000);
+            setFormData({ name: '', email: '', subject: '', message: '' });
+        }
+
+        setLoading(false);
     };
 
     return (
@@ -68,6 +88,11 @@ export default function ContactPage() {
                         </div>
 
                         <form className="contact-form glass-card" onSubmit={handleSubmit}>
+                            {error && (
+                                <div className="form-error" style={{ marginBottom: '16px', fontSize: '0.95rem' }}>
+                                    {error}
+                                </div>
+                            )}
                             {submitted && (
                                 <div className="form-success" style={{ marginBottom: '16px', fontSize: '0.95rem' }}>
                                     ✅ Message sent successfully! We'll get back to you soon.
@@ -117,8 +142,9 @@ export default function ContactPage() {
                                     required
                                 ></textarea>
                             </div>
-                            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-                                <Send size={16} /> Send Message
+                            <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+                                {loading ? <Loader2 size={16} className="spin-icon" /> : <Send size={16} />}
+                                {loading ? ' Sending...' : ' Send Message'}
                             </button>
                         </form>
                     </div>

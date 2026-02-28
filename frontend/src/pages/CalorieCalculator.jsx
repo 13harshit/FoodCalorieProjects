@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { Search, Sparkles, Loader2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 import './CalorieCalculator.css';
 
 const CALORIENINJAS_KEY = import.meta.env.VITE_CALORIENINJAS_API_KEY;
 
 export default function CalorieCalculator() {
+    const { user } = useAuth();
     const [query, setQuery] = useState('');
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [saved, setSaved] = useState(false);
 
     const popularFruits = [
         { emoji: '🍎', name: 'Apple' },
@@ -121,6 +125,32 @@ export default function CalorieCalculator() {
             };
 
             setResult(formattedResult);
+
+            // Save to Supabase history
+            setSaved(false);
+            if (user) {
+                try {
+                    const { error: insertError } = await supabase.from('food_analysis_history').insert([{
+                        user_id: user.id,
+                        type: 'calorie_search',
+                        filename: term,
+                        search_query: term,
+                        results: data.items.map(item => ({
+                            name: item.name,
+                            label: item.name,
+                            calories: item.calories,
+                            protein_g: item.protein_g,
+                            carbohydrates_total_g: item.carbohydrates_total_g,
+                            fat_total_g: item.fat_total_g,
+                            serving_size_g: item.serving_size_g
+                        })),
+                        total_calories: totalCalories,
+                        created_at: new Date().toISOString()
+                    }]);
+                    if (!insertError) setSaved(true);
+                    else console.warn('Supabase save error:', insertError.message);
+                } catch (e) { console.warn('Could not save to Supabase:', e); }
+            }
         } catch (err) {
             console.error('CalorieNinjas API Error:', err);
             setError(`Failed to fetch nutritional data: ${err.message}`);

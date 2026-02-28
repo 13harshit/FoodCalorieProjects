@@ -6,7 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = import.meta.env.DEV ? 'http://localhost:8000' : '';
 
 // Compress image to a much smaller base64 string to fit in Supabase row limits
 function compressImage(file, maxWidth = 300) {

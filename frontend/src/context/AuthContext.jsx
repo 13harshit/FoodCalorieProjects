@@ -151,7 +151,7 @@ export function AuthProvider({ children }) {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: 'https://ozhwqqegkxsmgqujelxd.supabase.co/auth/v1/callback',
+                redirectTo: window.location.origin,
                 queryParams: {
                     access_type: 'offline',
                     prompt: 'consent',

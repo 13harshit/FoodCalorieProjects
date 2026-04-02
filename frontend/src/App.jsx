@@ -32,6 +32,7 @@ function ProtectedRoute({ children, adminOnly = false, redirectAdminTo = null })
 }
 
 function App() {
+  const { user } = useAuth();
   const location = useLocation();
   const isDashboard = location.pathname === '/dashboard' || location.pathname === '/admin';
 
@@ -41,7 +42,7 @@ function App() {
       <main>
         <Routes>
           {/* Public Pages */}
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <LandingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/calorie-calculator" element={<CalorieCalculator />} />
